@@ -1,23 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { loadCategories } from '../actions/categories'
 import CategoryList from './CategoryList'
 
-const categories = [
-  {
-      "name": "react",
-      "path": "react"
-  },
-  {
-      "name": "redux",
-      "path": "redux"
-  },
-  {
-      "name": "udacity",
-      "path": "udacity"
-  }
-]
-
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(loadCategories())
+  }
+
   render() {
+    const { categories } = this.props
     return (
       <div>
         <CategoryList categories={categories} />
@@ -26,4 +18,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({ categories }) => {
+  return {
+    categories,
+  }
+}
+
+export default connect(mapStateToProps)(App)
