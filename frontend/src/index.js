@@ -5,9 +5,7 @@ import { createStore } from 'redux'
 import reducer from './reducers'
 import middleware from './middleware'
 import * as serviceWorker from './serviceWorker'
-
-import Home from './components/Home'
-import CategoryDetail from './components/CategoryDetail'
+import App from './components/App'
 
 const store = createStore(
   reducer,
@@ -16,8 +14,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <CategoryDetail categoryPath="react" />
-    <Home />
+    <App />
   </Provider>
 , document.getElementById('root'))
 

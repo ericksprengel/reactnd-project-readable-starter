@@ -8,7 +8,7 @@ import PostList from './PostList'
 class CategoryDetail extends Component {
   componentDidMount() {
     this.props.dispatch(loadCategories())
-    this.props.dispatch(loadPostsByCategory(this.props.categoryPath))
+    this.props.dispatch(loadPostsByCategory(this.props.match.params.categoryPath))
   }
 
   render() {
@@ -27,7 +27,8 @@ class CategoryDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ categories, posts }, { categoryPath }) => {
+const mapStateToProps = ({ categories, posts }, { match }) => {
+  const categoryPath = match.params.categoryPath
   const category = categories[categoryPath]
 
   let postsByCategory = []
