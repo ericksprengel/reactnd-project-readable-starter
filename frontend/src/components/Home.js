@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { loadCategories } from '../actions/categories'
 import { loadPosts } from '../actions/posts'
 import CategoryList from './CategoryList'
-import PostList from './PostList';
+import PostList from './PostList'
 
-class App extends Component {
+class Home extends Component {
   componentDidMount() {
     this.props.dispatch(loadCategories())
     this.props.dispatch(loadPosts())
@@ -29,4 +29,4 @@ const mapStateToProps = ({ categories, posts }) => {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(Home)
