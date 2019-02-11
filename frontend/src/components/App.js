@@ -1,26 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loadCategories } from '../actions/categories'
+import { loadPosts } from '../actions/posts'
 import CategoryList from './CategoryList'
+import PostList from './PostList';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(loadCategories())
+    this.props.dispatch(loadPosts())
   }
 
   render() {
-    const { categories } = this.props
+    const { categories, posts } = this.props
     return (
       <div>
         <CategoryList categories={categories} />
+        <PostList posts={posts} />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ categories }) => {
+const mapStateToProps = ({ categories, posts }) => {
   return {
     categories,
+    posts,
   }
 }
 

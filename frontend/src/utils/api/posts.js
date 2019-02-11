@@ -9,7 +9,7 @@ const headers = {
 const getPosts = () =>
   fetch(`${BASE_URL}/posts`, { headers })
     .then(res => res.json())
-    .then(data => data.posts)
+    .then(data => data)
 
 export {
   getPosts,
