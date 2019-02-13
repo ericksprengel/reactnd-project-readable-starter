@@ -3,13 +3,26 @@ import { Link } from 'react-router-dom'
 
 class Post extends PureComponent {
   render() {
-    const { post } = this.props
+    const {
+      id,
+      title,
+      body,
+      author,
+      timestamp,
+      voteScore,
+      commentCount,
+    } = this.props.post
     return (
-      <div>
-        <Link to={`/posts/${post.id}`}>
-          <h3>{post.title}</h3>
-        </Link>
-        <Link to={`/posts/edit/${post.id}`}>Edit</Link>
+      <div >
+        <div style={{width: 500, display: 'flex', alignItems: 'center', backgroundColor: '#dddddd', padding: 20, margin: 10}}>
+          <div style={{padding: 20}}>{voteScore}</div>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <h3>{title}</h3>
+            <p style={{margin: 5}}>{body}</p>
+            <div style={{alignSelf: 'flex-end'}}>{`${author} - ${timestamp}`} <Link to={`/posts/edit/${id}`}>Edit</Link></div>
+            <div>{commentCount} Comment(s)</div>
+          </div>
+        </div>
       </div>
     )
   }

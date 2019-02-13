@@ -6,6 +6,11 @@ const headers = {
   'Authorization': 'Basic YmFuYW5hOmJhbmFuYQ=='
 }
 
+const getPost = (postId) =>
+  fetch(`${BASE_URL}/posts/${postId}`, { headers })
+    .then(res => res.json())
+    .then(data => data)
+
 const getPosts = () =>
   fetch(`${BASE_URL}/posts`, { headers })
     .then(res => res.json())
@@ -17,6 +22,7 @@ const getPostsByCategory = (categoryPath) =>
     .then(data => data)
 
 export {
+  getPost,
   getPosts,
   getPostsByCategory,
 }
