@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loadCategories } from '../actions/categories'
 import { loadPostsByCategory } from '../actions/posts'
-import Category from './Category'
+import CategoryList from './CategoryList'
 import PostList from './PostList'
 
 class CategoryDetail extends Component {
@@ -11,19 +11,22 @@ class CategoryDetail extends Component {
     this.props.dispatch(loadPostsByCategory(this.props.match.params.categoryPath))
   }
 
-  render() {
-    const { category, posts } = this.props
-    if (!category) {
-      return (
-        <h1>Loading...</h1>
-      )
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.match.params.categoryPath !== prevProps.match.params.categoryPath) {
+      this.props.dispatch(loadCategories())
+      this.props.dispatch(loadPostsByCategory(this.props.match.params.categoryPath))
     }
+  }
+
+  render() {
+    const { categories, posts } = this.props
     return (
       <div>
-        <Category category={category} />
+        <CategoryList categories={categories} />
         <PostList posts={posts} />
       </div>
-    );
+    )
   }
 }
 
@@ -36,7 +39,7 @@ const mapStateToProps = ({ categories, posts }, { match }) => {
     postsByCategory = category.postIds.map(id => posts[id])
   }
   return {
-    category: categories[categoryPath],
+    categories: Object.values(categories),
     posts: postsByCategory,
   }
 }

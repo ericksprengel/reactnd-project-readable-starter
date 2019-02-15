@@ -1,4 +1,4 @@
-import { prop } from 'rambda'
+import { prop } from 'ramda'
 import { objFromListWith } from '../utils/rambaExt'
 import {
   LOAD_CATEGORIES,
@@ -17,6 +17,7 @@ const categories = (state = {}, action) => {
       }
     case LOAD_POSTS_BY_CATEGORY:
       return {
+        ...state,
         [action.categoryPath]: {
           ...state[action.categoryPath],
           postIds: action.posts.map(post => post.id),
