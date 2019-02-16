@@ -1,5 +1,5 @@
 import { prop } from 'ramda'
-import { objFromListWith } from '../utils/rambaExt'
+import { objFromListWith } from '../utils/commonFuncs'
 import {
   LOAD_COMMENTS_BY_POST,
 } from '../actions/comments'

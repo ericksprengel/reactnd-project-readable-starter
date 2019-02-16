@@ -1,20 +1,18 @@
 import { prop } from 'ramda'
-import { objFromListWith } from '../utils/rambaExt'
+import { objMergeFromListWith } from '../utils/commonFuncs'
 import {
   LOAD_CATEGORIES,
 } from '../actions/categories'
-import { LOAD_POSTS_BY_CATEGORY } from '../actions/posts';
+import { LOAD_POSTS_BY_CATEGORY } from '../actions/posts'
 
 const categories = (state = {}, action) => {
   switch (action.type) {
     case LOAD_CATEGORIES:
-      return {
-        ...state,
-        ...objFromListWith(
-          prop('path'),
-          action.categories,
-        )
-      }
+      return objMergeFromListWith(
+        prop('path'),
+        action.categories,
+        state,
+      )
     case LOAD_POSTS_BY_CATEGORY:
       return {
         ...state,

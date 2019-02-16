@@ -1,5 +1,5 @@
 import { prop } from 'ramda'
-import { objFromListWith } from '../utils/rambaExt'
+import { objMergeFromListWith } from '../utils/commonFuncs'
 import {
   LOAD_POST,
   LOAD_POSTS,
@@ -20,13 +20,11 @@ const posts = (state = {}, action) => {
       }
     case LOAD_POSTS:
     case LOAD_POSTS_BY_CATEGORY:
-      return {
-        ...state,
-        ...objFromListWith(
-          prop('id'),
-          action.posts,
-        )
-      }
+      return objMergeFromListWith(
+        prop('id'),
+        action.posts,
+        state,
+      )
     case LOAD_COMMENTS_BY_POST:
       return {
         ...state,
