@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom'
 class Post extends PureComponent {
   render() {
     const {
+      showDetails,
+      post,
+    } = this.props
+    const {
       id,
       title,
       body,
@@ -11,7 +15,7 @@ class Post extends PureComponent {
       timestamp,
       voteScore,
       commentCount,
-    } = this.props.post
+    } = post
     return (
       <div >
         <div style={{width: 500, display: 'flex', alignItems: 'center', backgroundColor: '#dddddd', padding: 20, margin: 10}}>
@@ -21,6 +25,7 @@ class Post extends PureComponent {
             <p style={{margin: 5}}>{body}</p>
             <div style={{alignSelf: 'flex-end'}}>{`${author} - ${timestamp}`} <Link to={`/posts/edit/${id}`}>Edit</Link></div>
             <div>{commentCount} Comment(s)</div>
+            {showDetails && <Link to={`/posts/${id}`}>More details</Link>}
           </div>
         </div>
       </div>

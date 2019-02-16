@@ -9,7 +9,7 @@ class PostList extends PureComponent {
         <h2>Posts</h2>
         <div>
           {posts.map((post) => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} post={post} showDetails />
           ))}
         </div>
       </div>
