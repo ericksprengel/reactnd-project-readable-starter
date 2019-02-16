@@ -1,17 +1,18 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { loadPost } from '../actions/posts'
-import Post from './Post';
+import { loadCommentsByPost } from '../actions/comments'
+import Post from './Post'
+import CommentList from './CommentList'
 
 class PostDetail extends PureComponent {
   componentDidMount() {
     this.props.dispatch(loadPost(this.props.match.params.postId))
+    this.props.dispatch(loadCommentsByPost(this.props.match.params.postId))
   }
 
   render() {
-    console.log('postId:', this.props.match.params.postId)
-    console.log('post:', this.props.post)
-    const { post } = this.props
+    const { post, comments } = this.props
     if (!post) {
       return (
         <h3>Wait...</h3>
@@ -21,16 +22,22 @@ class PostDetail extends PureComponent {
     return (
       <div>
         <Post post={post} />
+        <CommentList comments={comments} />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ posts }, { match }) => {
+const mapStateToProps = ({ posts, comments }, { match }) => {
   const post = posts[match.params.postId]
 
+  let commentsByPost = []
+  if (post && post.commentIds) {
+    commentsByPost = post.commentIds.map(commentId => comments[commentId])
+  }
   return {
     post,
+    comments: commentsByPost,
   }
 }
 export default connect(mapStateToProps)(PostDetail)
