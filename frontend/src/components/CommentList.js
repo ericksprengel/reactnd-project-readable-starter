@@ -12,6 +12,7 @@ class CommentList extends PureComponent {
             <Comment key={comment.id} comment={comment} />
           ))}
         </div>
+        { comments.length === 0 && <h4>No comments...</h4> }
       </div>
     )
   }

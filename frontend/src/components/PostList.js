@@ -12,6 +12,7 @@ class PostList extends PureComponent {
             <Post key={post.id} post={post} showDetails />
           ))}
         </div>
+        { posts.length === 0 && <h4>No posts...</h4> }
       </div>
     )
   }
