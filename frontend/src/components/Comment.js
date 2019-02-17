@@ -9,13 +9,14 @@ class Comment extends PureComponent {
       author,
       voteScore,
     } = this.props.comment
+    const datetime = new Date(timestamp)
     return (
       <div >
         <div style={{width: 500, display: 'flex', alignItems: 'center', backgroundColor: '#dddddd', padding: 20, margin: 10}}>
           <div style={{padding: 20}}>{voteScore}</div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <p style={{margin: 5}}>{body}</p>
-            <div style={{alignSelf: 'flex-end'}}>{`${author} - ${timestamp}`}</div>
+            <div style={{alignSelf: 'flex-end'}}>{`${author} - ${datetime.toLocaleDateString()} - ${datetime.toLocaleTimeString()}`}</div>
           </div>
         </div>
       </div>

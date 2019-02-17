@@ -16,6 +16,7 @@ class Post extends PureComponent {
       voteScore,
       commentCount,
     } = post
+    const datetime = new Date(timestamp)
     return (
       <div >
         <div style={{width: 500, display: 'flex', alignItems: 'center', backgroundColor: '#dddddd', padding: 20, margin: 10}}>
@@ -23,7 +24,10 @@ class Post extends PureComponent {
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <h3>{title}</h3>
             <p style={{margin: 5}}>{body}</p>
-            <div style={{alignSelf: 'flex-end'}}>{`${author} - ${timestamp}`} <Link to={`/posts/edit/${id}`}>Edit</Link></div>
+            <div style={{alignSelf: 'flex-end'}}>
+              {`${author} - ${datetime.toLocaleDateString()} - ${datetime.toLocaleTimeString()}`}
+              <Link to={`/posts/edit/${id}`}>Edit</Link>
+            </div>
             <div>{commentCount} Comment(s)</div>
             {showDetails && <Link to={`/posts/${id}`}>More details</Link>}
           </div>
