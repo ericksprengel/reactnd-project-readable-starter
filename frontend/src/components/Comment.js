@@ -3,14 +3,11 @@ import React, { PureComponent } from 'react'
 class Comment extends PureComponent {
   render() {
     const {
-      id,
-      parentId,
+      // id, TODO: delete function
       timestamp,
       body,
       author,
       voteScore,
-      deleted,
-      parentDeleted,
     } = this.props.comment
     return (
       <div >

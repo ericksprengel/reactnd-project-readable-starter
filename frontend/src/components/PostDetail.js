@@ -4,6 +4,7 @@ import { loadPost } from '../actions/posts'
 import { loadCommentsByPost } from '../actions/comments'
 import Post from './Post'
 import CommentList from './CommentList'
+import CommentNew from './CommentNew'
 
 class PostDetail extends PureComponent {
   componentDidMount() {
@@ -23,6 +24,7 @@ class PostDetail extends PureComponent {
       <div>
         <Post post={post} />
         <CommentList comments={comments} />
+        <CommentNew postId={post.id} />
       </div>
     )
   }

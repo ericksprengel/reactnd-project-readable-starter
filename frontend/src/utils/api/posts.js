@@ -1,10 +1,7 @@
-
-const BASE_URL = "http://localhost:3001"
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Basic YmFuYW5hOmJhbmFuYQ=='
-}
+import {
+  BASE_URL,
+  headers,
+} from './common'
 
 const getPost = (postId) =>
   fetch(`${BASE_URL}/posts/${postId}`, { headers })

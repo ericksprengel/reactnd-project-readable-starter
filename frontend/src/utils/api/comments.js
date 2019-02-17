@@ -1,16 +1,23 @@
-
-const BASE_URL = "http://localhost:3001"
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Basic YmFuYW5hOmJhbmFuYQ=='
-}
+import {
+  BASE_URL,
+  headers,
+} from './common'
 
 const getCommentsByPost = (postId) =>
   fetch(`${BASE_URL}/posts/${postId}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
 
+
+const addComment = (comment) =>
+  fetch(`${BASE_URL}/comments`, {
+    method: 'POST',
+    body: JSON.stringify(comment),
+    headers
+  }).then(res => res.json())
+    .then(data => data)
+
 export {
   getCommentsByPost,
+  addComment,
 }
