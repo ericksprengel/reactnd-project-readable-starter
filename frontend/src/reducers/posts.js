@@ -35,12 +35,14 @@ const posts = (state = {}, action) => {
         }
       }
     case ADD_COMMENT:
+      const postId = action.comment.parentId
+      const post = state[postId]
       return {
         ...state,
-        [action.comment.parentId]: {
-          ...state[action.comment.parentId],
+        [postId]: {
+          ...post,
           commentIds: [
-            ...state[action.comment.parentId].commentIds,
+            ...(post.commentIds ? post.commentIds : []),
             action.comment.id,
           ],
         }
