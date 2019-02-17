@@ -3,7 +3,10 @@ import { objMergeFromListWith } from '../utils/commonFuncs'
 import {
   LOAD_CATEGORIES,
 } from '../actions/categories'
-import { LOAD_POSTS_BY_CATEGORY } from '../actions/posts'
+import {
+  LOAD_POSTS_BY_CATEGORY,
+  ADD_POST,
+} from '../actions/posts'
 
 const categories = (state = {}, action) => {
   switch (action.type) {
@@ -19,6 +22,19 @@ const categories = (state = {}, action) => {
         [action.categoryPath]: {
           ...state[action.categoryPath],
           postIds: action.posts.map(post => post.id),
+        }
+      }
+    case ADD_POST:
+      const categoryPath = action.post.category
+      const category = state[categoryPath]
+      return {
+        ...state,
+        [categoryPath]: {
+          ...category,
+          postIds: [
+            ...(category.postIds ? category.postIds : []),
+            action.post.id,
+          ],
         }
       }
     default:

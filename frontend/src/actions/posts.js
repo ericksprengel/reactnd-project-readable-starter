@@ -2,11 +2,13 @@ import {
   getPost as loadPostFromApi,
   getPosts as loadPostsFromApi,
   getPostsByCategory as loadPostsByCategoryFromApi,
+  addPost as addPostFromApi,
 } from "../utils/api/posts"
 
 const LOAD_POST = 'LOAD_POST'
 const LOAD_POSTS = 'LOAD_POSTS'
 const LOAD_POSTS_BY_CATEGORY = 'LOAD_POSTS_BY_CATEGORY'
+const ADD_POST = 'ADD_POST'
 
 const actionLoadPost = (post) => {
   return {
@@ -29,6 +31,11 @@ const actionLoadPostsByCategory = (categoryPath, posts) => {
     posts,
   }
 }
+
+const actionAddPost = (post) => ({
+  type: ADD_POST,
+  post,
+})
 
 const loadPost = (postId) => {
   return (dispatch, getState) => {
@@ -72,11 +79,27 @@ const loadPostsByCategory = (categoryPath) => {
   }
 }
 
+const addPost = (post) => {
+  return (dispatch, getState) => {
+    // dispatch(showLoading())
+    return addPostFromApi(post).then((postFromApi) => {
+        dispatch(actionAddPost(postFromApi))
+        // dispatch(hideLoading())
+      })
+      .catch((e) => {
+        console.warn('Error in addPost', e)
+        // dispatch(hideLoading())
+      })
+  }
+}
+
 export {
   LOAD_POST,
   LOAD_POSTS,
   LOAD_POSTS_BY_CATEGORY,
+  ADD_POST,
   loadPost,
   loadPosts,
-  loadPostsByCategory
+  loadPostsByCategory,
+  addPost,
 }

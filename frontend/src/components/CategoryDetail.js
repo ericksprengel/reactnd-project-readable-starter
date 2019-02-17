@@ -4,8 +4,12 @@ import { loadCategories } from '../actions/categories'
 import { loadPostsByCategory } from '../actions/posts'
 import CategoryList from './CategoryList'
 import PostList from './PostList'
+import PostNew from './PostNew'
 
 class CategoryDetail extends Component {
+  state = {
+    modalNewPostOpen: false,
+  }
   componentDidMount() {
     this.props.dispatch(loadCategories())
     this.props.dispatch(loadPostsByCategory(this.props.match.params.categoryPath))
@@ -19,12 +23,20 @@ class CategoryDetail extends Component {
     }
   }
 
+  openPostNew = () => this.setState({modalNewPostOpen: true})
+  closePostNew = () => this.setState({modalNewPostOpen: false})
+
   render() {
+    const { categoryPath } = this.props.match.params
     const { categories, posts } = this.props
     return (
       <div>
         <CategoryList categories={categories} />
         <PostList posts={posts} />
+        <button onClick={this.openPostNew}>New Post</button>
+        { this.state.modalNewPostOpen
+          && <PostNew onCreated={this.closePostNew} category={categoryPath} />
+        }
       </div>
     )
   }

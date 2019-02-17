@@ -4,6 +4,7 @@ import {
   LOAD_POST,
   LOAD_POSTS,
   LOAD_POSTS_BY_CATEGORY,
+  ADD_POST,
 } from '../actions/posts'
 import {
   LOAD_COMMENTS_BY_POST,
@@ -26,6 +27,13 @@ const posts = (state = {}, action) => {
         action.posts,
         state,
       )
+    case ADD_POST:
+      return {
+        ...state,
+        [action.post.id]: {
+          ...action.post,
+        }
+      }
     case LOAD_COMMENTS_BY_POST:
       return {
         ...state,

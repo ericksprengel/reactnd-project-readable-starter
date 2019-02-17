@@ -35,7 +35,8 @@ class CommentNew extends PureComponent {
         <legend>Enter your comment:</legend>
         <textarea
           value={this.state.text}
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <button onClick={this.handleSend}>Send</button>
       </div>
     )

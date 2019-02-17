@@ -39,7 +39,7 @@ const addComment = (comment) => {
         // dispatch(hideLoading())
       })
       .catch((e) => {
-        console.warn('Error in loadCommentsByPost', e)
+        console.warn('Error in addComment', e)
         // dispatch(hideLoading())
       })
   }

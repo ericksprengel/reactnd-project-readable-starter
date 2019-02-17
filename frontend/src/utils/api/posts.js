@@ -18,8 +18,17 @@ const getPostsByCategory = (categoryPath) =>
     .then(res => res.json())
     .then(data => data)
 
+const addPost = (post) =>
+    fetch(`${BASE_URL}/posts`, {
+      method: 'POST',
+      body: JSON.stringify(post),
+      headers
+    }).then(res => res.json())
+      .then(data => data)
+
 export {
   getPost,
   getPosts,
   getPostsByCategory,
+  addPost,
 }
