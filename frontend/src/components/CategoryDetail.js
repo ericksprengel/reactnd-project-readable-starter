@@ -10,6 +10,7 @@ class CategoryDetail extends Component {
   state = {
     modalNewPostOpen: false,
   }
+
   componentDidMount() {
     this.props.dispatch(loadCategories())
     this.props.dispatch(loadPostsByCategory(this.props.match.params.categoryPath))
@@ -29,14 +30,13 @@ class CategoryDetail extends Component {
   render() {
     const { categoryPath } = this.props.match.params
     const { categories, posts } = this.props
+    const { modalNewPostOpen } = this.state
     return (
       <div>
         <CategoryList categories={categories} />
         <PostList posts={posts} />
         <button onClick={this.openPostNew}>New Post</button>
-        { this.state.modalNewPostOpen
-          && <PostNew onCreated={this.closePostNew} category={categoryPath} />
-        }
+        <PostNew onClose={this.closePostNew} open={modalNewPostOpen} category={categoryPath} />
       </div>
     )
   }
