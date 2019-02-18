@@ -49,6 +49,7 @@ const posts = (state = {}, action) => {
         ...state,
         [postId]: {
           ...post,
+          commentCount: post.commentCount + 1,
           commentIds: [
             ...(post.commentIds ? post.commentIds : []),
             action.comment.id,
