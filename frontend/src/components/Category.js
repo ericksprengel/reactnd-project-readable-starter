@@ -8,7 +8,12 @@ class Category extends PureComponent {
   render() {
     const { category, disabled } = this.props
     return (
-      <Button disabled={disabled} component={Link} to={`/categories/${category.path}`}>
+      <Button
+        disabled={disabled}
+        component={Link}
+        to={`/categories/${category.path}`}
+        size="large"
+      >
         {category.name}
       </Button>
     )

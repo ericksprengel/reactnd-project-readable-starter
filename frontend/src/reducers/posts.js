@@ -9,6 +9,7 @@ import {
 import {
   LOAD_COMMENTS_BY_POST,
   ADD_COMMENT,
+  DELETE_COMMENT,
 } from '../actions/comments'
 
 const posts = (state = {}, action) => {
@@ -43,6 +44,7 @@ const posts = (state = {}, action) => {
         }
       }
     case ADD_COMMENT:
+    {
       const postId = action.comment.parentId
       const post = state[postId]
       return {
@@ -56,6 +58,23 @@ const posts = (state = {}, action) => {
           ],
         }
       }
+    }
+    case DELETE_COMMENT:
+    {
+      const postId = action.comment.parentId
+      const post = state[postId]
+      return {
+        ...state,
+        [postId]: {
+          ...post,
+          commentCount: post.commentCount - 1,
+          commentIds: post.commentIds.filter(
+            commentId => commentId !== action.comment.id
+          )
+        },
+      }
+    }
+
     default:
       return state
   }

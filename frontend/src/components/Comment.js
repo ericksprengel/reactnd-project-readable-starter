@@ -1,6 +1,23 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import {
+  IconButton,
+} from '@material-ui/core'
+import {
+  Delete as DeleteIcon,
+} from '@material-ui/icons'
+import {
+  deleteComment,
+} from '../actions/comments'
 
 class Comment extends PureComponent {
+
+  deleteThisComment = () => {
+    this.props.dispatch(
+      deleteComment(this.props.comment)
+    )
+  }
+
   render() {
     const {
       // id, TODO: delete function
@@ -16,12 +33,20 @@ class Comment extends PureComponent {
           <div style={{padding: 20}}>{voteScore}</div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <p style={{margin: 5}}>{body}</p>
-            <div style={{alignSelf: 'flex-end'}}>{`${author} - ${datetime.toLocaleDateString()} - ${datetime.toLocaleTimeString()}`}</div>
+            <div style={{alignSelf: 'flex-end'}}>
+              {`${author} - ${datetime.toLocaleDateString()} - ${datetime.toLocaleTimeString()}`}
+            </div>
           </div>
+          <IconButton
+            onClick={this.deleteThisComment}
+            aria-label="Delete"
+          >
+            <DeleteIcon />
+          </IconButton>
         </div>
       </div>
     )
   }
 }
 
-export default Comment
+export default connect()(Comment)

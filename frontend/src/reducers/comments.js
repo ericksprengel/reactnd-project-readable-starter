@@ -1,8 +1,12 @@
-import { prop } from 'ramda'
+import {
+  dissoc,
+  prop,
+} from 'ramda'
 import { objFromListWith } from '../utils/commonFuncs'
 import {
   LOAD_COMMENTS_BY_POST,
   ADD_COMMENT,
+  DELETE_COMMENT,
 } from '../actions/comments'
 
 const comments = (state = {}, action) => {
@@ -22,6 +26,9 @@ const comments = (state = {}, action) => {
           ...action.comment,
         }
       }
+    case DELETE_COMMENT:
+      return dissoc(action.comment.id, state)
+
     default:
       return state
   }
