@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import {
+  Button,
+} from '@material-ui/core'
 import { loadCategories } from '../actions/categories'
 import { loadPostsByCategory } from '../actions/posts'
 import CategoryList from './CategoryList'
@@ -33,9 +36,11 @@ class CategoryDetail extends Component {
     const { modalNewPostOpen } = this.state
     return (
       <div>
-        <CategoryList categories={categories} />
+        <CategoryList categories={categories} disabledCategory={categoryPath} />
         <PostList posts={posts} />
-        <button onClick={this.openPostNew}>New Post</button>
+        <Button onClick={this.openPostNew} variant="contained" color="primary">
+          New Post
+        </Button>
         <PostNew onClose={this.closePostNew} open={modalNewPostOpen} category={categoryPath} />
       </div>
     )

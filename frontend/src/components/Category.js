@@ -1,13 +1,16 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import {
+  Button,
+} from '@material-ui/core'
 
 class Category extends PureComponent {
   render() {
-    const { category } = this.props
+    const { category, disabled } = this.props
     return (
-      <Link to={`/categories/${category.path}`} >
-        <h3>{category.name}</h3>
-      </Link>
+      <Button disabled={disabled} component={Link} to={`/categories/${category.path}`}>
+        {category.name}
+      </Button>
     )
   }
 }

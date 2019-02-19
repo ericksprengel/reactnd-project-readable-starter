@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import {
+  Button,
+} from '@material-ui/core'
 import { loadCategories } from '../actions/categories'
 import { loadPosts } from '../actions/posts'
 import CategoryList from './CategoryList'
@@ -26,7 +29,9 @@ class Home extends Component {
       <div>
         <CategoryList categories={categories} />
         <PostList posts={posts} />
-        <button onClick={this.openPostNew}>New Post</button>
+        <Button onClick={this.openPostNew} variant="contained" color="primary">
+          New Post
+        </Button>
         <PostNew onClose={this.closePostNew} open={modalNewPostOpen} />
       </div>
     );
