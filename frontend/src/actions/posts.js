@@ -3,12 +3,14 @@ import {
   getPosts as loadPostsFromApi,
   getPostsByCategory as loadPostsByCategoryFromApi,
   addPost as addPostFromApi,
+  deletePost as deletePostFromApi,
 } from "../utils/api/posts"
 
 const LOAD_POST = 'LOAD_POST'
 const LOAD_POSTS = 'LOAD_POSTS'
 const LOAD_POSTS_BY_CATEGORY = 'LOAD_POSTS_BY_CATEGORY'
 const ADD_POST = 'ADD_POST'
+const DELETE_POST = 'DELETE_POST'
 
 const actionLoadPost = (post) => {
   return {
@@ -34,6 +36,11 @@ const actionLoadPostsByCategory = (categoryPath, posts) => {
 
 const actionAddPost = (post) => ({
   type: ADD_POST,
+  post,
+})
+
+const actionDeletePost = (post) => ({
+  type: DELETE_POST,
   post,
 })
 
@@ -93,13 +100,29 @@ const addPost = (post) => {
   }
 }
 
+const deletePost = (post) => {
+  return (dispatch, getState) => {
+    // dispatch(showLoading())
+    return deletePostFromApi(post.id).then((postFromApi) => {
+        dispatch(actionDeletePost(postFromApi))
+        // dispatch(hideLoading())
+      })
+      .catch((e) => {
+        console.warn('Error in deletePost', e)
+        // dispatch(hideLoading())
+      })
+  }
+}
+
 export {
   LOAD_POST,
   LOAD_POSTS,
   LOAD_POSTS_BY_CATEGORY,
   ADD_POST,
+  DELETE_POST,
   loadPost,
   loadPosts,
   loadPostsByCategory,
   addPost,
+  deletePost,
 }

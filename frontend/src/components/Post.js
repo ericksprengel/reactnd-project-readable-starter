@@ -1,7 +1,24 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {
+  IconButton,
+} from '@material-ui/core'
+import {
+  Delete as DeleteIcon,
+} from '@material-ui/icons'
+import {
+  deletePost,
+} from '../actions/posts'
 
 class Post extends PureComponent {
+
+  deleteThisPost = () => {
+    this.props.dispatch(
+      deletePost(this.props.post)
+    )
+  }
+
   render() {
     const {
       showDetails,
@@ -31,10 +48,16 @@ class Post extends PureComponent {
             <div>{commentCount} Comment(s)</div>
             {showDetails && <Link to={`/posts/${id}`}>More details</Link>}
           </div>
+          <IconButton
+            onClick={this.deleteThisPost}
+            aria-label="Delete"
+          >
+            <DeleteIcon />
+          </IconButton>
         </div>
       </div>
     )
   }
 }
 
-export default Post
+export default connect()(Post)

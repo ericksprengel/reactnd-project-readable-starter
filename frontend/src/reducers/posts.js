@@ -1,10 +1,14 @@
-import { prop } from 'ramda'
+import {
+  dissoc,
+  prop,
+} from 'ramda'
 import { objMergeFromListWith } from '../utils/commonFuncs'
 import {
   LOAD_POST,
   LOAD_POSTS,
   LOAD_POSTS_BY_CATEGORY,
   ADD_POST,
+  DELETE_POST,
 } from '../actions/posts'
 import {
   LOAD_COMMENTS_BY_POST,
@@ -35,6 +39,8 @@ const posts = (state = {}, action) => {
           ...action.post,
         }
       }
+    case DELETE_POST:
+      return dissoc(action.post.id, state)
     case LOAD_COMMENTS_BY_POST:
       return {
         ...state,

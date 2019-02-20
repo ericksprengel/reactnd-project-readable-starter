@@ -6,6 +6,7 @@ import {
 import {
   LOAD_POSTS_BY_CATEGORY,
   ADD_POST,
+  DELETE_POST,
 } from '../actions/posts'
 
 const categories = (state = {}, action) => {
@@ -25,6 +26,7 @@ const categories = (state = {}, action) => {
         }
       }
     case ADD_POST:
+    {
       const categoryPath = action.post.category
       const category = state[categoryPath]
       return {
@@ -37,6 +39,21 @@ const categories = (state = {}, action) => {
           ],
         }
       }
+    }
+    case DELETE_POST:
+    {
+      const categoryPath = action.post.category
+      const category = state[categoryPath]
+      return {
+        ...state,
+        [categoryPath]: {
+          ...category,
+          postIds: category.postIds.filter(
+            (postId) => postId !== action.post.id,
+          ),
+        }
+      }
+    }
     default:
       return state
   }
