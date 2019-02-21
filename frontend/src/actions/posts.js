@@ -1,10 +1,14 @@
+import { showLoading, hideLoading } from 'react-redux-loading'
 import {
   getPost as loadPostFromApi,
   getPosts as loadPostsFromApi,
   getPostsByCategory as loadPostsByCategoryFromApi,
   addPost as addPostFromApi,
   deletePost as deletePostFromApi,
-} from "../utils/api/posts"
+} from '../utils/api/posts'
+import {
+  loadCommentsByPost,
+} from './comments'
 
 const LOAD_POST = 'LOAD_POST'
 const LOAD_POSTS = 'LOAD_POSTS'
@@ -46,15 +50,16 @@ const actionDeletePost = (post) => ({
 
 const loadPost = (postId) => {
   return (dispatch, getState) => {
-    // dispatch(showLoading())
+    dispatch(showLoading())
     return loadPostFromApi(postId).then((post) => {
-        dispatch(actionLoadPost(post))
-        // dispatch(hideLoading())
-      })
-      .catch((e) => {
-        console.warn('Error in loadPost', e)
-        // dispatch(hideLoading())
-      })
+      if (!post.id || post.error) {
+        dispatch(hideLoading())
+        return
+      }
+      dispatch(loadCommentsByPost(postId))
+      dispatch(actionLoadPost(post))
+      dispatch(hideLoading())
+    })
   }
 }
 
@@ -62,13 +67,13 @@ const loadPosts = () => {
   return (dispatch, getState) => {
     // dispatch(showLoading())
     return loadPostsFromApi().then((posts) => {
-        dispatch(actionLoadPosts(posts))
-        // dispatch(hideLoading())
-      })
-      .catch((e) => {
-        console.warn('Error in loadPosts', e)
-        // dispatch(hideLoading())
-      })
+      dispatch(actionLoadPosts(posts))
+      // dispatch(hideLoading())
+    })
+    .catch((e) => {
+      console.warn('Error in loadPosts', e)
+      // dispatch(hideLoading())
+    })
   }
 }
 

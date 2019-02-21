@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { loadPost } from '../actions/posts'
-import { loadCommentsByPost } from '../actions/comments'
 import Post from './Post'
 import CommentList from './CommentList'
 import CommentNew from './CommentNew'
@@ -9,20 +9,27 @@ import CommentNew from './CommentNew'
 class PostDetail extends PureComponent {
   componentDidMount() {
     this.props.dispatch(loadPost(this.props.match.params.postId))
-    this.props.dispatch(loadCommentsByPost(this.props.match.params.postId))
+  }
+
+  redirectToHome = () => {
+    this.props.history.replace('/')
   }
 
   render() {
-    const { post, comments } = this.props
-    if (!post) {
+    const { post, comments, loadingBar } = this.props
+    if (loadingBar.default > 0) {
       return (
         <h3>Wait...</h3>
       )
     }
-
+    if (!post || post.deleted) {
+      return (
+        <h3>Post not found</h3>
+      )
+    }
     return (
       <div>
-        <Post post={post} />
+        <Post post={post} onDelete={this.redirectToHome}/>
         <CommentList comments={comments} />
         <CommentNew postId={post.id} />
       </div>
@@ -30,7 +37,7 @@ class PostDetail extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ posts, comments }, { match }) => {
+const mapStateToProps = ({ posts, comments, loadingBar }, { match }) => {
   const post = posts[match.params.postId]
 
   let commentsByPost = []
@@ -40,6 +47,7 @@ const mapStateToProps = ({ posts, comments }, { match }) => {
   return {
     post,
     comments: commentsByPost,
+    loadingBar
   }
 }
-export default connect(mapStateToProps)(PostDetail)
+export default withRouter(connect(mapStateToProps)(PostDetail))

@@ -1,3 +1,4 @@
+import { showLoading, hideLoading } from 'react-redux-loading'
 import {
   getCommentsByPost as loadCommentsByPostFromApi,
   addComment as addCommentFromApi,
@@ -26,14 +27,14 @@ const actionDeleteComment = (comment) => ({
 
 const loadCommentsByPost = (postId) => {
   return (dispatch, getState) => {
-    // dispatch(showLoading())
+    dispatch(showLoading())
     return loadCommentsByPostFromApi(postId).then((comments) => {
         dispatch(actionLoadCommentsByPost(postId, comments))
-        // dispatch(hideLoading())
+        dispatch(hideLoading())
       })
       .catch((e) => {
         console.warn('Error in loadCommentsByPost', e)
-        // dispatch(hideLoading())
+        dispatch(hideLoading())
       })
   }
 }

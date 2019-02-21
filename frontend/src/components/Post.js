@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import {
   IconButton,
@@ -17,6 +18,7 @@ class Post extends PureComponent {
     this.props.dispatch(
       deletePost(this.props.post)
     )
+    this.props.onDelete()
   }
 
   render() {
@@ -58,6 +60,26 @@ class Post extends PureComponent {
       </div>
     )
   }
+}
+
+Post.defaultProps = {
+  showDetails: false,
+  onDelete: () => {},
+}
+
+Post.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  showDetails: PropTypes.bool,
+  onDelete: PropTypes.func,
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    timestamp: PropTypes.number.isRequired,
+    voteScore: PropTypes.number.isRequired,
+    commentCount: PropTypes.number.isRequired,
+  }).isRequired,
 }
 
 export default connect()(Post)
