@@ -1,9 +1,12 @@
-import { prop } from 'ramda'
-import { objMergeFromListWith } from '../utils/commonFuncs'
+import * as R from 'ramda'
+import {
+  objMergeFromListWith,
+} from '../utils/commonFuncs'
 import {
   LOAD_CATEGORIES,
 } from '../actions/categories'
 import {
+  LOAD_POSTS,
   LOAD_POSTS_BY_CATEGORY,
   ADD_POST,
   DELETE_POST,
@@ -13,10 +16,23 @@ const categories = (state = {}, action) => {
   switch (action.type) {
     case LOAD_CATEGORIES:
       return objMergeFromListWith(
-        prop('path'),
+        R.prop('path'),
         action.categories,
         state,
       )
+    case LOAD_POSTS:
+    {
+      const groupPostIds = (acc, {id}) => acc.concat(id)
+      const byCategory = ({category}) => category
+      const postsIdsByCategory = R.reduceBy(groupPostIds, [], byCategory, action.posts)
+
+      const mergePostIdsInCategories = (cat, postIds) => ({...cat, postIds: postIds})
+      return R.mergeWith(
+        mergePostIdsInCategories,
+        state,
+        postsIdsByCategory,
+      )
+    }
     case LOAD_POSTS_BY_CATEGORY:
       return {
         ...state,
