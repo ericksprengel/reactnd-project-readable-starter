@@ -45,7 +45,7 @@ class CommentNew extends PureComponent {
           rowsMax="10"
           variant="outlined"
         />
-        <Button style={{left: -20}} onClick={this.handleSend} variant="contained" color="primary">
+        <Button style={{left: -4}} onClick={this.handleSend} variant="contained" color="primary">
           Send
         </Button>
       </div>

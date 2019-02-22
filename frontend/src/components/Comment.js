@@ -1,13 +1,17 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import {
   IconButton,
   TextField,
+  Typography,
 } from '@material-ui/core'
 import {
   Delete as DeleteIcon,
   Edit as EditIcon,
-  Save as SaveIcon,
+  Done as DoneIcon,
+  ArrowUpward as ArrowUpwardIcon,
+  ArrowDownward as ArrorDownwardIcon,
 } from '@material-ui/icons'
 import {
   deleteComment,
@@ -64,55 +68,94 @@ class Comment extends PureComponent {
     const {
       editMode,
     } = this.state
-    const datetime = new Date(timestamp)
     return (
       <div >
-        <div style={{width: 500, display: 'flex', alignItems: 'center', backgroundColor: '#dddddd', padding: 20, margin: 10}}>
-          <div style={{padding: 20}}>{voteScore}</div>
-          <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{width: 500, display: 'flex', backgroundColor: '#dddddd', margin: 10}}>
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <IconButton
+              onClick={this.upvote}
+              aria-label="Upvote"
+            >
+              <ArrowUpwardIcon />
+            </IconButton>
+            <Typography
+              variant="h5"
+            >
+              {voteScore}
+            </Typography>
+            <IconButton
+              onClick={this.upvote}
+              aria-label="Downvote"
+            >
+              <ArrorDownwardIcon />
+            </IconButton>
+          </div>
+          <div style={{flex: 1, display: 'flex', flexDirection: 'column', alignSelf: 'stretch', padding: 10}}>
             { editMode
-              ? (<TextField
+              ? (
+                <TextField
+                  style={{margin: 5,flex: 1}}
                   value={this.state.bodyEdit}
                   onChange={this.handleBodyChange}
                   label="Body"
                   multiline
-                  rowsMax="10"
+                  rows="2"
+                  rowsMax="2"
                   fullWidth
                   variant="outlined"
                 />
               )
-              : (<p style={{margin: 5}}>{body}</p>)
-            }
-            <div style={{alignSelf: 'flex-end'}}>
-              {`${author} - ${datetime.toLocaleDateString()} - ${datetime.toLocaleTimeString()}`}
-            </div>
-          </div>
-          { editMode
-            ? (
-              <IconButton
-                onClick={this.saveThisComment}
-                aria-label="Save"
+              : (
+              <Typography
+                variant="body1"
+                style={{margin: 20, flexGrow: 1}}
               >
-                <SaveIcon />
-              </IconButton>
-            )
-            : (
-              <Fragment>
+                {body}
+              </Typography>
+              )
+            }
+            <Typography
+              variant="caption"
+              gutterBottom
+              style={{alignSelf: 'flex-end'}}
+            >
+              {`${author} - ${moment(timestamp).from(moment())}`}
+            </Typography>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignSelf: 'stretch', backgroundColor: '#ccc'}}>
+            { editMode
+              ? (
                 <IconButton
-                  onClick={this.deleteThisComment}
-                  aria-label="Delete"
+                  onClick={this.saveThisComment}
+                  aria-label="Done"
                 >
-                  <DeleteIcon />
+                  <DoneIcon
+                    fontSize="small"
+                  />
                 </IconButton>
-                <IconButton
-                  onClick={this.editThisComment}
-                  aria-label="Edit"
-                >
-                  <EditIcon />
-                </IconButton>
-              </Fragment>
-            )
-          }
+              )
+              : (
+                <Fragment>
+                  <IconButton
+                    onClick={this.editThisComment}
+                    aria-label="Edit"
+                  >
+                    <EditIcon
+                      fontSize="small"
+                      />
+                  </IconButton>
+                  <IconButton
+                    onClick={this.deleteThisComment}
+                    aria-label="Delete"
+                  >
+                    <DeleteIcon
+                      fontSize="small"
+                    />
+                  </IconButton>
+                </Fragment>
+              )
+            }
+          </div>
         </div>
       </div>
     )

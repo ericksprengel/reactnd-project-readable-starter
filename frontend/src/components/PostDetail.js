@@ -28,7 +28,7 @@ class PostDetail extends PureComponent {
       )
     }
     return (
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <Post post={post} onDelete={this.redirectToHome}/>
         <CommentList comments={comments} />
         <CommentNew postId={post.id} />
