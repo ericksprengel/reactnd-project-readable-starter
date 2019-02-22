@@ -2,6 +2,10 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import uuid from 'uuid/v1'
+import {
+  Button,
+  TextField,
+} from '@material-ui/core'
 import { addComment } from '../actions/comments'
 
 class CommentNew extends PureComponent {
@@ -31,13 +35,19 @@ class CommentNew extends PureComponent {
 
   render() {
     return (
-      <div>
-        <legend>Enter your comment:</legend>
-        <textarea
+      <div style={{flexDirection: 'row', display: 'flex', padding: 20}}>
+        <TextField
+          style={{width: 440}}
           value={this.state.text}
           onChange={this.handleChange}
+          label="New comment"
+          multiline
+          rowsMax="10"
+          variant="outlined"
         />
-        <button onClick={this.handleSend}>Send</button>
+        <Button style={{left: -20}} onClick={this.handleSend} variant="contained" color="primary">
+          Send
+        </Button>
       </div>
     )
   }

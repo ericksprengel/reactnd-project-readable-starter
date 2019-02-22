@@ -25,8 +25,21 @@ const deleteComment = (commentId) =>
   .then(res => res.json())
   .then(data => data)
 
+const updateComment = (commentId, body) =>
+  fetch(`${BASE_URL}/comments/${commentId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      body,
+      timestamp: (new Date()).getTime(),
+    }),
+    headers,
+  })
+  .then(res => res.json())
+  .then(data => data)
+
 export {
   getCommentsByPost,
   addComment,
   deleteComment,
+  updateComment,
 }

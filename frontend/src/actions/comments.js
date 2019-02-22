@@ -3,11 +3,13 @@ import {
   getCommentsByPost as loadCommentsByPostFromApi,
   addComment as addCommentFromApi,
   deleteComment as deleteCommentFromApi,
+  updateComment as updateCommentFromApi,
 } from "../utils/api/comments"
 
 const LOAD_COMMENTS_BY_POST = 'LOAD_COMMENTS_BY_POST'
 const ADD_COMMENT = 'ADD_COMMENT'
 const DELETE_COMMENT = 'DELETE_COMMENT'
+const UPDATE_COMMENT = 'UPDATE_COMMENT'
 
 const actionLoadCommentsByPost = (postId, comments) => ({
   type: LOAD_COMMENTS_BY_POST,
@@ -22,6 +24,11 @@ const actionAddComment = (comment) => ({
 
 const actionDeleteComment = (comment) => ({
   type: DELETE_COMMENT,
+  comment,
+})
+
+const actionUpdateComment = (comment) => ({
+  type: UPDATE_COMMENT,
   comment,
 })
 
@@ -68,11 +75,24 @@ const deleteComment = (comment) => {
   }
 }
 
+const updateComment = (commentId, body) => {
+  return (dispatch) => {
+    return updateCommentFromApi(commentId, body).then((commentFromApi) => {
+      dispatch(actionUpdateComment(commentFromApi))
+    })
+    .catch((e) => {
+      console.warn('Error in updateComment', e)
+    })
+  }
+}
+
 export {
   LOAD_COMMENTS_BY_POST,
   ADD_COMMENT,
   DELETE_COMMENT,
+  UPDATE_COMMENT,
   loadCommentsByPost,
   addComment,
   deleteComment,
+  updateComment,
 }

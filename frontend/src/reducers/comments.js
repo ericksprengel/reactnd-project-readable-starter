@@ -6,6 +6,7 @@ import { objFromListWith } from '../utils/commonFuncs'
 import {
   LOAD_COMMENTS_BY_POST,
   ADD_COMMENT,
+  UPDATE_COMMENT,
   DELETE_COMMENT,
 } from '../actions/comments'
 
@@ -20,6 +21,7 @@ const comments = (state = {}, action) => {
         )
       }
     case ADD_COMMENT:
+    case UPDATE_COMMENT:
       return {
         ...state,
         [action.comment.id]: {

@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core'
 import {
   Delete as DeleteIcon,
+  Edit as EditIcon,
 } from '@material-ui/icons'
 import {
   deletePost,
@@ -55,6 +56,12 @@ class Post extends PureComponent {
             aria-label="Delete"
           >
             <DeleteIcon />
+          </IconButton>
+          <IconButton
+            onClick={this.editThisPost}
+            aria-label="Edit"
+          >
+            <EditIcon />
           </IconButton>
         </div>
       </div>
