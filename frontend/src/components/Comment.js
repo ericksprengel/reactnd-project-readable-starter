@@ -16,12 +16,21 @@ import {
 import {
   deleteComment,
   updateComment,
+  voteComment,
+  PARAM_UPVOTE,
+  PARAM_DOWNVOTE,
 } from '../actions/comments'
 
 class Comment extends PureComponent {
   state = {
     editMode: false,
     bodyEdit: '',
+  }
+
+  voteThisComment = (vote) => {
+    this.props.dispatch(
+      voteComment(this.props.comment.id, vote)
+    )
   }
 
   deleteThisComment = () => {
@@ -73,7 +82,7 @@ class Comment extends PureComponent {
         <div style={{width: 500, display: 'flex', backgroundColor: '#dddddd', margin: 10}}>
           <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <IconButton
-              onClick={this.upvote}
+              onClick={() => this.voteThisComment(PARAM_UPVOTE)}
               aria-label="Upvote"
             >
               <ArrowUpwardIcon />
@@ -84,7 +93,7 @@ class Comment extends PureComponent {
               {voteScore}
             </Typography>
             <IconButton
-              onClick={this.upvote}
+              onClick={() => this.voteThisComment(PARAM_DOWNVOTE)}
               aria-label="Downvote"
             >
               <ArrorDownwardIcon />

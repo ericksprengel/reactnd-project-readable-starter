@@ -37,9 +37,22 @@ const updateComment = (commentId, body) =>
   .then(res => res.json())
   .then(data => data)
 
-export {
+
+const voteComment = (commentId, vote) =>
+  fetch(`${BASE_URL}/comments/${commentId}`, {
+    method: 'POST',
+    body: JSON.stringify({
+      option: vote,
+    }),
+    headers,
+  })
+  .then(res => res.json())
+  .then(data => data)
+
+  export {
   getCommentsByPost,
   addComment,
   deleteComment,
   updateComment,
+  voteComment,
 }

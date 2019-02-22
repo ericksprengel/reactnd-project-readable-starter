@@ -4,12 +4,16 @@ import {
   addComment as addCommentFromApi,
   deleteComment as deleteCommentFromApi,
   updateComment as updateCommentFromApi,
+  voteComment as voteCommentFromApi,
 } from "../utils/api/comments"
 
 const LOAD_COMMENTS_BY_POST = 'LOAD_COMMENTS_BY_POST'
 const ADD_COMMENT = 'ADD_COMMENT'
 const DELETE_COMMENT = 'DELETE_COMMENT'
 const UPDATE_COMMENT = 'UPDATE_COMMENT'
+
+const PARAM_UPVOTE = 'upVote'
+const PARAM_DOWNVOTE = 'downVote'
 
 const actionLoadCommentsByPost = (postId, comments) => ({
   type: LOAD_COMMENTS_BY_POST,
@@ -86,6 +90,18 @@ const updateComment = (commentId, body) => {
   }
 }
 
+
+const voteComment = (commentId, vote) => {
+  return (dispatch) => {
+    return voteCommentFromApi(commentId, vote).then((commentFromApi) => {
+      dispatch(actionUpdateComment(commentFromApi))
+    })
+    .catch((e) => {
+      console.warn('Error in voteComment', e)
+    })
+  }
+}
+
 export {
   LOAD_COMMENTS_BY_POST,
   ADD_COMMENT,
@@ -95,4 +111,5 @@ export {
   addComment,
   deleteComment,
   updateComment,
+  voteComment, PARAM_UPVOTE, PARAM_DOWNVOTE,
 }
