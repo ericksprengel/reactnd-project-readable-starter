@@ -10,8 +10,6 @@ import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   Done as DoneIcon,
-  ArrowUpward as ArrowUpwardIcon,
-  ArrowDownward as ArrorDownwardIcon,
 } from '@material-ui/icons'
 import {
   deleteComment,
@@ -20,6 +18,7 @@ import {
   PARAM_UPVOTE,
   PARAM_DOWNVOTE,
 } from '../actions/comments'
+import Vote from './Vote'
 
 class Comment extends PureComponent {
   state = {
@@ -80,25 +79,11 @@ class Comment extends PureComponent {
     return (
       <div >
         <div style={{width: 500, display: 'flex', backgroundColor: '#dddddd', margin: 10}}>
-          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <IconButton
-              onClick={() => this.voteThisComment(PARAM_UPVOTE)}
-              aria-label="Upvote"
-            >
-              <ArrowUpwardIcon />
-            </IconButton>
-            <Typography
-              variant="h5"
-            >
-              {voteScore}
-            </Typography>
-            <IconButton
-              onClick={() => this.voteThisComment(PARAM_DOWNVOTE)}
-              aria-label="Downvote"
-            >
-              <ArrorDownwardIcon />
-            </IconButton>
-          </div>
+          <Vote
+            score={voteScore}
+            onUpvote={() => this.voteThisComment(PARAM_UPVOTE)}
+            onDownvote={() => this.voteThisComment(PARAM_DOWNVOTE)}
+          />
           <div style={{flex: 1, display: 'flex', flexDirection: 'column', alignSelf: 'stretch', padding: 10}}>
             { editMode
               ? (

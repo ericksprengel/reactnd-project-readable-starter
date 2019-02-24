@@ -90,7 +90,6 @@ const updateComment = (commentId, body) => {
   }
 }
 
-
 const voteComment = (commentId, vote) => {
   return (dispatch) => {
     return voteCommentFromApi(commentId, vote).then((commentFromApi) => {
