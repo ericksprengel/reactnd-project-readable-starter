@@ -5,7 +5,8 @@ import {
   getPostsByCategory as loadPostsByCategoryFromApi,
   addPost as addPostFromApi,
   deletePost as deletePostFromApi,
-  votePost as votePostFromApi
+  updatePost as updatePostFromApi,
+  votePost as votePostFromApi,
 } from '../utils/api/posts'
 import {
   loadCommentsByPost,
@@ -117,15 +118,26 @@ const addPost = (post) => {
 
 const deletePost = (post) => {
   return (dispatch, getState) => {
-    // dispatch(showLoading())
+    dispatch(showLoading())
     return deletePostFromApi(post.id).then((postFromApi) => {
         dispatch(actionDeletePost(postFromApi))
-        // dispatch(hideLoading())
+        dispatch(hideLoading())
       })
       .catch((e) => {
         console.warn('Error in deletePost', e)
-        // dispatch(hideLoading())
+        dispatch(hideLoading())
       })
+  }
+}
+
+const updatePost = (postId, title, body) => {
+  return (dispatch) => {
+    return updatePostFromApi(postId, title, body).then((postFromApi) => {
+      dispatch(actionUpdatePost(postFromApi))
+    })
+    .catch((e) => {
+      console.warn('Error in updatePost', e)
+    })
   }
 }
 
@@ -152,5 +164,6 @@ export {
   loadPostsByCategory,
   addPost,
   deletePost,
+  updatePost,
   votePost, PARAM_UPVOTE, PARAM_DOWNVOTE,
 }
