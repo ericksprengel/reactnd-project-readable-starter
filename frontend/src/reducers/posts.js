@@ -9,6 +9,7 @@ import {
   LOAD_POSTS_BY_CATEGORY,
   ADD_POST,
   DELETE_POST,
+  UPDATE_POST,
 } from '../actions/posts'
 import {
   LOAD_COMMENTS_BY_POST,
@@ -33,10 +34,12 @@ const posts = (state = {}, action) => {
         state,
       )
     case ADD_POST:
+    case UPDATE_POST:
       return {
         ...state,
         [action.post.id]: {
           ...action.post,
+          commentIds: state[action.post.id] ? state[action.post.id].commentIds : [],
         }
       }
     case DELETE_POST:

@@ -5,6 +5,7 @@ import {
   getPostsByCategory as loadPostsByCategoryFromApi,
   addPost as addPostFromApi,
   deletePost as deletePostFromApi,
+  votePost as votePostFromApi
 } from '../utils/api/posts'
 import {
   loadCommentsByPost,
@@ -15,6 +16,10 @@ const LOAD_POSTS = 'LOAD_POSTS'
 const LOAD_POSTS_BY_CATEGORY = 'LOAD_POSTS_BY_CATEGORY'
 const ADD_POST = 'ADD_POST'
 const DELETE_POST = 'DELETE_POST'
+const UPDATE_POST = 'UPDATE_POST'
+
+const PARAM_UPVOTE = 'upVote'
+const PARAM_DOWNVOTE = 'downVote'
 
 const actionLoadPost = (post) => {
   return {
@@ -45,6 +50,11 @@ const actionAddPost = (post) => ({
 
 const actionDeletePost = (post) => ({
   type: DELETE_POST,
+  post,
+})
+
+const actionUpdatePost = (post) => ({
+  type: UPDATE_POST,
   post,
 })
 
@@ -119,15 +129,28 @@ const deletePost = (post) => {
   }
 }
 
+const votePost = (postId, vote) => {
+  return (dispatch) => {
+    return votePostFromApi(postId, vote).then((postFromApi) => {
+      dispatch(actionUpdatePost(postFromApi))
+    })
+    .catch((e) => {
+      console.warn('Error in votePost', e)
+    })
+  }
+}
+
 export {
   LOAD_POST,
   LOAD_POSTS,
   LOAD_POSTS_BY_CATEGORY,
   ADD_POST,
   DELETE_POST,
+  UPDATE_POST,
   loadPost,
   loadPosts,
   loadPostsByCategory,
   addPost,
   deletePost,
+  votePost, PARAM_UPVOTE, PARAM_DOWNVOTE,
 }

@@ -11,9 +11,20 @@ import {
 } from '@material-ui/icons'
 import {
   deletePost,
+  updatePost,
+  votePost,
+  PARAM_UPVOTE,
+  PARAM_DOWNVOTE,
 } from '../actions/posts'
+import Vote from './Vote'
 
 class Post extends PureComponent {
+
+  voteThisPost = (vote) => {
+    this.props.dispatch(
+      votePost(this.props.post.id, vote)
+    )
+  }
 
   deleteThisPost = () => {
     this.props.dispatch(
@@ -40,7 +51,11 @@ class Post extends PureComponent {
     return (
       <div >
         <div style={{width: 500, display: 'flex', alignItems: 'center', backgroundColor: '#dddddd', padding: 20, margin: 10}}>
-          <div style={{padding: 20}}>{voteScore}</div>
+          <Vote
+            score={voteScore}
+            onUpvote={() => this.voteThisPost(PARAM_UPVOTE)}
+            onDownvote={() => this.voteThisPost(PARAM_DOWNVOTE)}
+          />
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <h3>{title}</h3>
             <p style={{margin: 5}}>{body}</p>
