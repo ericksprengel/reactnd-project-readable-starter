@@ -66,15 +66,12 @@ const addComment = (comment) => {
 
 const deleteComment = (comment) => {
   return (dispatch) => {
-    // dispatch(showLoading())
     console.warn('parece ruim')
     return deleteCommentFromApi(comment.id).then((commentFromApi) => {
       dispatch(actionDeleteComment(commentFromApi))
-      // dispatch(hideLoading())
     })
     .catch((e) => {
       console.warn('Error in deleteComment', e)
-      // dispatch(hideLoading())
     })
   }
 }

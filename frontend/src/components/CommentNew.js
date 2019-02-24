@@ -31,6 +31,9 @@ class CommentNew extends PureComponent {
       body: this.state.text,
       author: author,
     }))
+    this.setState({
+      text: '',
+    })
   }
 
   render() {

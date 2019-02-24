@@ -1,16 +1,9 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import {
-  IconButton,
   TextField,
   Typography,
 } from '@material-ui/core'
-import {
-  Delete as DeleteIcon,
-  Edit as EditIcon,
-  Done as DoneIcon,
-} from '@material-ui/icons'
 import {
   deleteComment,
   updateComment,
@@ -18,6 +11,8 @@ import {
   PARAM_UPVOTE,
   PARAM_DOWNVOTE,
 } from '../actions/comments'
+import ActionsBar from './ActionsBar'
+import AuthorAndDate from './AuthorAndDate'
 import Vote from './Vote'
 
 class Comment extends PureComponent {
@@ -62,7 +57,6 @@ class Comment extends PureComponent {
 
   handleBodyChange = (e) => {
     e.preventDefault()
-    console.log(e)
     this.setState({bodyEdit: e.target.value});
   }
 
@@ -77,80 +71,46 @@ class Comment extends PureComponent {
       editMode,
     } = this.state
     return (
-      <div >
-        <div style={{width: 500, display: 'flex', backgroundColor: '#dddddd', margin: 10}}>
-          <Vote
-            score={voteScore}
-            onUpvote={() => this.voteThisComment(PARAM_UPVOTE)}
-            onDownvote={() => this.voteThisComment(PARAM_DOWNVOTE)}
-          />
-          <div style={{flex: 1, display: 'flex', flexDirection: 'column', alignSelf: 'stretch', padding: 10}}>
-            { editMode
-              ? (
-                <TextField
-                  style={{margin: 5,flex: 1}}
-                  value={this.state.bodyEdit}
-                  onChange={this.handleBodyChange}
-                  label="Body"
-                  multiline
-                  rows="2"
-                  rowsMax="2"
-                  fullWidth
-                  variant="outlined"
-                />
-              )
-              : (
-              <Typography
-                variant="body1"
-                style={{margin: 20, flexGrow: 1}}
-              >
-                {body}
-              </Typography>
-              )
-            }
+      <div style={{width: 500, display: 'flex', backgroundColor: '#dddddd', margin: 10}}>
+        <Vote
+          score={voteScore}
+          onUpvote={() => this.voteThisComment(PARAM_UPVOTE)}
+          onDownvote={() => this.voteThisComment(PARAM_DOWNVOTE)}
+        />
+        <div style={{flex: 1, display: 'flex', flexDirection: 'column', alignSelf: 'stretch', padding: 10}}>
+          { editMode
+            ? (
+              <TextField
+                value={this.state.bodyEdit}
+                onChange={this.handleBodyChange}
+                autoFocus
+                label="Body"
+                multiline
+                fullWidth
+                variant="outlined"
+                margin="normal"
+              />
+            )
+            : (
             <Typography
-              variant="caption"
-              gutterBottom
-              style={{alignSelf: 'flex-end'}}
+              variant="body1"
+              style={{margin: 29, flexGrow: 1, whiteSpace: 'pre-line'}}
             >
-              {`${author} - ${moment(timestamp).from(moment())}`}
+              {body}
             </Typography>
-          </div>
-          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignSelf: 'stretch', backgroundColor: '#ccc'}}>
-            { editMode
-              ? (
-                <IconButton
-                  onClick={this.saveThisComment}
-                  aria-label="Done"
-                >
-                  <DoneIcon
-                    fontSize="small"
-                  />
-                </IconButton>
-              )
-              : (
-                <Fragment>
-                  <IconButton
-                    onClick={this.editThisComment}
-                    aria-label="Edit"
-                  >
-                    <EditIcon
-                      fontSize="small"
-                      />
-                  </IconButton>
-                  <IconButton
-                    onClick={this.deleteThisComment}
-                    aria-label="Delete"
-                  >
-                    <DeleteIcon
-                      fontSize="small"
-                    />
-                  </IconButton>
-                </Fragment>
-              )
-            }
-          </div>
+            )
+          }
+          <AuthorAndDate
+            author={author}
+            timestamp={timestamp}
+          />
         </div>
+        <ActionsBar
+          editMode={editMode}
+          onDoneAction={this.saveThisComment}
+          onEditAction={this.editThisComment}
+          onDeleteAction={this.deleteThisComment}
+        />
       </div>
     )
   }
