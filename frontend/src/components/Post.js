@@ -184,19 +184,24 @@ Post.defaultProps = {
   onDelete: () => {},
 }
 
+const postPropType = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+  voteScore: PropTypes.number.isRequired,
+  commentCount: PropTypes.number.isRequired,
+}
+
 Post.propTypes = {
   dispatch: PropTypes.func.isRequired,
   showDetails: PropTypes.bool,
   onDelete: PropTypes.func,
-  post: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    timestamp: PropTypes.number.isRequired,
-    voteScore: PropTypes.number.isRequired,
-    commentCount: PropTypes.number.isRequired,
-  }).isRequired,
+  post: PropTypes.shape(postPropType).isRequired,
 }
 
+export {
+  postPropType,
+}
 export default connect()(Post)

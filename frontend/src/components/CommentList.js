@@ -1,12 +1,18 @@
 import React, { PureComponent } from 'react'
-import Comment from './Comment'
+import PropTypes from 'prop-types'
+import {
+  Typography,
+} from '@material-ui/core'
+import Comment, { commentPropType } from './Comment'
 
 class CommentList extends PureComponent {
   render() {
     const { comments } = this.props
     return (
       <div>
-        <h2>Comments</h2>
+        <Typography variant="h5" gutterBottom>
+          Comments
+        </Typography>
         <div>
           {comments.map((comment) => (
             <Comment key={comment.id} comment={comment} />
@@ -16,6 +22,12 @@ class CommentList extends PureComponent {
       </div>
     )
   }
+}
+
+CommentList.propTypes = {
+  comments: PropTypes.arrayOf(
+    PropTypes.shape(commentPropType),
+  )
 }
 
 export default CommentList

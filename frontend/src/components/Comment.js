@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import {
   TextField,
   Typography,
@@ -116,4 +117,18 @@ class Comment extends PureComponent {
   }
 }
 
+const commentPropType = {
+  id: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+  body: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  voteScore: PropTypes.number.isRequired,
+}
+Comment.propTypes = {
+  comment: PropTypes.shape(commentPropType).isRequired,
+}
+
+export {
+  commentPropType
+}
 export default connect()(Comment)

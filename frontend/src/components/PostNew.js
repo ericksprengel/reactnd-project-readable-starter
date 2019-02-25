@@ -73,7 +73,6 @@ class PostNew extends PureComponent {
   render() {
     const { category, categories, open, onClose } = this.props
     const selectedCategory = this.getSelectedCategory()
-    console.log("selectedCategory", selectedCategory)
     return (
       <Dialog
         aria-labelledby="form-dialog-title"
