@@ -12,7 +12,7 @@ class Category extends PureComponent {
       <Button
         disabled={disabled}
         component={Link}
-        to={`/categories/${category.path}`}
+        to={`/${category.path}`}
         size="large"
       >
         {category.name}

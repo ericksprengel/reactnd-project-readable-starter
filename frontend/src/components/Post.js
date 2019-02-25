@@ -97,6 +97,7 @@ class Post extends PureComponent {
       title,
       body,
       author,
+      category,
       timestamp,
       voteScore,
       commentCount,
@@ -154,7 +155,7 @@ class Post extends PureComponent {
           <div style={{display: 'flex', justifyContent: 'space-between'}}>
             { showDetails
               ? (
-                <Link to={`/posts/${id}`}>
+                <Link to={`/${category}/${id}`}>
                   <CommentsCounter value={commentCount} />
                 </Link>
               )
