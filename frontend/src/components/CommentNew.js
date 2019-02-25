@@ -6,7 +6,7 @@ import {
   Button,
   TextField,
 } from '@material-ui/core'
-import { addComment } from '../actions/comments'
+import { addComment as addCommentAction} from '../actions/comments'
 
 class CommentNew extends PureComponent {
   state = {
@@ -24,13 +24,13 @@ class CommentNew extends PureComponent {
       postId,
       author,
     } = this.props
-    this.props.dispatch(addComment({
+    this.props.addComment({
       id: uuid(),
       parentId: postId,
       timestamp: (new Date()).getTime(),
       body: this.state.text,
       author: author,
-    }))
+    })
     this.setState({
       text: '',
     })
@@ -68,4 +68,13 @@ const mapStateToProps = ({ session }) => {
     author: session.username,
   }
 }
-export default connect(mapStateToProps)(CommentNew)
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addComment: (comment) => dispatch(
+      addCommentAction(comment)
+    ),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentNew)

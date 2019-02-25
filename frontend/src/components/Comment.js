@@ -6,9 +6,9 @@ import {
   Typography,
 } from '@material-ui/core'
 import {
-  deleteComment,
-  updateComment,
-  voteComment,
+  deleteComment as deleteCommentAction,
+  updateComment as updateCommentAction,
+  voteComment as voteCommentAction,
   PARAM_UPVOTE,
   PARAM_DOWNVOTE,
 } from '../actions/comments'
@@ -23,15 +23,11 @@ class Comment extends PureComponent {
   }
 
   voteThisComment = (vote) => {
-    this.props.dispatch(
-      voteComment(this.props.comment.id, vote)
-    )
+    this.props.voteComment(this.props.comment.id, vote)
   }
 
   deleteThisComment = () => {
-    this.props.dispatch(
-      deleteComment(this.props.comment)
-    )
+    this.props.deleteComment(this.props.comment)
   }
 
   editThisComment = () => {
@@ -51,9 +47,7 @@ class Comment extends PureComponent {
     this.setState({
       editMode: false,
     })
-    this.props.dispatch(
-      updateComment(id, bodyEdit)
-    )
+    this.props.updateComment(id, bodyEdit)
   }
 
   handleBodyChange = (e) => {
@@ -128,7 +122,21 @@ Comment.propTypes = {
   comment: PropTypes.shape(commentPropType).isRequired,
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteComment: (comment) => dispatch(
+      deleteCommentAction(comment)
+    ),
+    updateComment: (commentId, body) => dispatch(
+      updateCommentAction(commentId, body)
+    ),
+    voteComment: (commentId, vote) => dispatch(
+      voteCommentAction(commentId, vote)
+    ),
+  }
+}
+
 export {
   commentPropType
 }
-export default connect()(Comment)
+export default connect(null, mapDispatchToProps)(Comment)

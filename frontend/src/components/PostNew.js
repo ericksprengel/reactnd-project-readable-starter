@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 
-import { addPost } from '../actions/posts'
+import { addPost as addPostAction } from '../actions/posts'
 
 class PostNew extends PureComponent {
   state = {
@@ -53,14 +53,14 @@ class PostNew extends PureComponent {
       author,
       onClose,
     } = this.props
-    this.props.dispatch(addPost({
+    this.props.addPost({
       id: uuid(),
       timestamp: (new Date()).getTime(),
       title: this.state.title,
       body: this.state.body,
       author: author,
       category: category === null ? this.getSelectedCategory() : category,
-    }))
+    })
 
     this.setState({
       title: '',
@@ -144,4 +144,10 @@ const mapStateToProps = ({ session, categories }) => {
   }
 }
 
-export default connect(mapStateToProps)(PostNew)
+const mapDispatchToProps = dispatch => {
+  return {
+    addPost: (post) => dispatch(addPostAction(post)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostNew)

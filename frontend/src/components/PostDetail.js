@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { loadPost } from '../actions/posts'
+import { loadPost as loadPostAction } from '../actions/posts'
 import Post from './Post'
 import CommentList from './CommentList'
 import CommentNew from './CommentNew'
 
 class PostDetail extends PureComponent {
   componentDidMount() {
-    this.props.dispatch(loadPost(this.props.match.params.postId))
+    this.props.loadPost(this.props.match.params.postId)
   }
 
   redirectToHome = () => {
@@ -50,4 +50,11 @@ const mapStateToProps = ({ posts, comments, loadingBar }, { match }) => {
     loadingBar
   }
 }
-export default withRouter(connect(mapStateToProps)(PostDetail))
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadPost: (postId) => dispatch(loadPostAction(postId)),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail))

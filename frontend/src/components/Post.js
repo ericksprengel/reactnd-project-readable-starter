@@ -7,9 +7,9 @@ import {
   Typography,
 } from '@material-ui/core'
 import {
-  deletePost,
-  updatePost,
-  votePost,
+  deletePost as deletePostAction,
+  updatePost as updatePostAction,
+  votePost as votePostAction,
   PARAM_UPVOTE,
   PARAM_DOWNVOTE,
 } from '../actions/posts'
@@ -41,15 +41,11 @@ class Post extends PureComponent {
   }
 
   voteThisPost = (vote) => {
-    this.props.dispatch(
-      votePost(this.props.post.id, vote)
-    )
+    this.props.votePost(this.props.post.id, vote)
   }
 
   deleteThisPost = () => {
-    this.props.dispatch(
-      deletePost(this.props.post)
-    )
+    this.props.deletePost(this.props.post)
     this.props.onDelete()
   }
 
@@ -72,9 +68,7 @@ class Post extends PureComponent {
     this.setState({
       editMode: false,
     })
-    this.props.dispatch(
-      updatePost(id, titleEdit, bodyEdit)
-    )
+    this.props.updatePost(id, titleEdit, bodyEdit)
   }
 
   handleTitleChange = (e) => {
@@ -196,13 +190,27 @@ const postPropType = {
 }
 
 Post.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  votePost: PropTypes.func.isRequired,
   showDetails: PropTypes.bool,
   onDelete: PropTypes.func,
   post: PropTypes.shape(postPropType).isRequired,
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    votePost: (postId, vote) => dispatch(
+      votePostAction(postId, vote)
+    ),
+    deletePost: (post) => dispatch(
+      deletePostAction(post)
+    ),
+    updatePost: (postId, title, body) => dispatch(
+      updatePostAction(postId, title, body)
+    )
+  }
+}
+
 export {
   postPropType,
 }
-export default connect()(Post)
+export default connect(null, mapDispatchToProps)(Post)

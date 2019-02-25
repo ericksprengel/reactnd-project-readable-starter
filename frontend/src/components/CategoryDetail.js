@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 import {
   Button,
 } from '@material-ui/core'
-import { loadCategories } from '../actions/categories'
 import {
-  loadPosts,
-  loadPostsByCategory,
+  loadCategories as loadCategoriesAction,
+} from '../actions/categories'
+import {
+  loadPosts as loadPostsAction,
+  loadPostsByCategory as loadPostsByCategoryAction,
 } from '../actions/posts'
 import CategoryList from './CategoryList'
 import PostList from './PostList'
@@ -18,23 +20,23 @@ class CategoryDetail extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(loadCategories())
-    this.dispatchloadPosts()
+    this.props.loadCategories()
+    this.loadPosts()
   }
 
   componentDidUpdate(prevProps) {
     const { categoryPath } = this.props.match.params
     if (categoryPath !== prevProps.match.params.categoryPath) {
-      this.dispatchloadPosts()
+      this.loadPosts()
     }
   }
 
-  dispatchloadPosts = () => {
+  loadPosts = () => {
     const { categoryPath } = this.props.match.params
     if (categoryPath) {
-      this.props.dispatch(loadPostsByCategory(this.props.match.params.categoryPath))
+      this.props.loadPostsByCategory(this.props.match.params.categoryPath)
     } else {
-      this.props.dispatch(loadPosts())
+      this.props.loadPosts()
     }
   }
 
@@ -77,4 +79,12 @@ const mapStateToProps = ({ categories, posts }, { match }) => {
   }
 }
 
-export default connect(mapStateToProps)(CategoryDetail)
+const mapDispatchToProps = dispatch => {
+  return {
+    loadCategories: () => dispatch(loadCategoriesAction()),
+    loadPostsByCategory: (categoryPath) => dispatch(loadPostsByCategoryAction(categoryPath)),
+    loadPosts: () => dispatch(loadPostsAction())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryDetail)
