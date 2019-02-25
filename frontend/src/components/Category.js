@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import {
   Button,
@@ -18,6 +19,13 @@ class Category extends PureComponent {
       </Button>
     )
   }
+}
+
+Category.propTypes = {
+  category: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 export default Category
