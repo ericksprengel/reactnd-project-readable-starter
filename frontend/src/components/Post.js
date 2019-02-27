@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import {
   TextField,
   Typography,
+  ButtonBase,
 } from '@material-ui/core'
 import {
   deletePost as deletePostAction,
@@ -19,6 +20,16 @@ import Vote from './Vote'
 
 
 // TINY COMPONENTS
+
+const LinkWithRipple = ({to, children}) => (
+  <ButtonBase
+    focusRipple
+    component={Link}
+    to={to}
+  >
+    {children}
+  </ButtonBase>
+)
 
 const Title = ({title}) => (
   <Typography
@@ -143,9 +154,9 @@ class Post extends PureComponent {
               <div>
                 { showDetails
                   ? (
-                    <Link to={`/${category}/${id}`} style={{textDecoration: 'none'}}>
+                    <LinkWithRipple to={`/${category}/${id}`}>
                       <Title title={title} />
-                    </Link>
+                    </LinkWithRipple>
                   )
                   : (
                     <Title title={title} />
