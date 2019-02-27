@@ -10,9 +10,18 @@ import {
   loadPosts as loadPostsAction,
   loadPostsByCategory as loadPostsByCategoryAction,
 } from '../actions/posts'
-import CategoryList from './CategoryList'
+import CategoryList, { CATEGORY_ALL_POSTS } from './CategoryList'
 import PostList from './PostList'
 import PostNew from './PostNew'
+
+const styles = {
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    margin: 10,
+  }
+}
 
 class CategoryDetail extends Component {
   state = {
@@ -48,8 +57,8 @@ class CategoryDetail extends Component {
     const { categories, posts } = this.props
     const { modalNewPostOpen } = this.state
     return (
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <CategoryList categories={categories} disabledCategory={categoryPath} />
+      <div style={styles.container}>
+        <CategoryList categories={categories} disabledCategory={categoryPath || CATEGORY_ALL_POSTS} />
         <PostList posts={posts} />
         <Button onClick={this.openPostNew} variant="contained" color="primary">
           New Post

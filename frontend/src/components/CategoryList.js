@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core'
 import Category from './Category'
 
+const CATEGORY_ALL_POSTS = 'CATEGORY_ALL_POSTS'
+
 const Home = ({disabled}) => (
   <Button
     component={Link}
@@ -29,7 +31,7 @@ class CategoryList extends PureComponent {
         </Typography>
         <div>
           <Home
-            disabled={disabledCategory === null}
+            disabled={disabledCategory === CATEGORY_ALL_POSTS}
           />
           {categories.map((category) => (
             <Category
@@ -53,4 +55,7 @@ CategoryList.propTypes = {
   disabledCategory: PropTypes.string,
 }
 
+export {
+  CATEGORY_ALL_POSTS,
+}
 export default CategoryList
