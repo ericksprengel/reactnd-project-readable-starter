@@ -20,6 +20,15 @@ import Vote from './Vote'
 
 // TINY COMPONENTS
 
+const Title = ({title}) => (
+  <Typography
+    variant="h5"
+    gutterBottom
+    style={{margin: 29, flexGrow: 1, whiteSpace: 'pre-line'}}
+  >
+    {title}
+  </Typography>
+)
 const CommentsCounter = ({value}) => (
   <Typography
     variant="caption"
@@ -132,11 +141,16 @@ class Post extends PureComponent {
             )
             : (
               <div>
-                <h3
-                  style={{margin: 29, flexGrow: 1, whiteSpace: 'pre-line'}}
-                >
-                  {title}
-                </h3>
+                { showDetails
+                  ? (
+                    <Link to={`/${category}/${id}`} style={{textDecoration: 'none'}}>
+                      <Title title={title} />
+                    </Link>
+                  )
+                  : (
+                    <Title title={title} />
+                  )
+                }
                 <Typography
                   variant="body1"
                   style={{margin: 45, flexGrow: 1, whiteSpace: 'pre-line'}}
